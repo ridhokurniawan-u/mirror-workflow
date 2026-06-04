@@ -16,6 +16,14 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
           
+      - name: Debug
+        env:
+          GLUSER: ${{ secrets.GLUSER }}
+          GLPASS: ${{ secrets.GLPASS }}
+        run: |
+          echo "GLUSER length: ${#GLUSER}"
+          echo "GLPASS length: ${#GLPASS}"
+          
       - name: push to gitlab
         run: |
           git remote add gitlab https://${{ secrets.GLUSER }}:${{ secrets.GLPASS }}@gitlab.mertani.com/mertani-software/github-mirror.git
