@@ -3,7 +3,7 @@ name: mirror-to-gitlab
 on:
   push:
     branches:
-      - '*'
+      - 'main'
 
 jobs:
   mirror:
@@ -11,11 +11,13 @@ jobs:
 
     steps:
       - name: checkout
-        uses: action/checkout@v4
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: false
+          
       - name: push to gitlab
-      run: |
-        git remote add gitlab https://${{ secrets.GLUSER }}:${{ secrets.GLPASS }}@gitlab.mertani.com/mertani-software/github-mirror.git
-        git push --mirror gitlab
+        run: |
+          git remote add gitlab https://${{ secrets.GLUSER }}:${{ secrets.GLPASS }}@gitlab.mertani.com/mertani-software/github-mirror.git
+          git push --mirror gitlab
         
