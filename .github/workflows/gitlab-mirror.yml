@@ -1,0 +1,21 @@
+name: mirror-to-gitlab
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  mirror:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: checkout
+        uses: action/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: push to gitlab
+      run: |
+        git remote add gitlab https://${{ secrets.GLUSER }}:${{ secrets.GLPASS }}@gitlab.mertani.com/mertani-software/github-mirror.git
+        git push --mirror gitlab
+        
